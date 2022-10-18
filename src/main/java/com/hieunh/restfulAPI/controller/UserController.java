@@ -2,11 +2,14 @@ package com.hieunh.restfulAPI.controller;
 
 import com.hieunh.restfulAPI.entity.User;
 import com.hieunh.restfulAPI.model.dto.UserDto;
+import com.hieunh.restfulAPI.request.CreateUserReq;
+import com.hieunh.restfulAPI.request.UpdateUserReq;
 import com.hieunh.restfulAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,17 +37,20 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> createUser() {
-        return null;
+    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserReq req) {
+        UserDto result = userService.createUser(req);
+        return ResponseEntity.ok(result);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser() {
-        return null;
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UpdateUserReq req,@PathVariable int id) {
+        UserDto result = userService.updateUser(req, id);
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser() {
-        return null;
+    public ResponseEntity<?> deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok("Delete success");
     }
 }
